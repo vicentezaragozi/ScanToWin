@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asambra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        .container h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .container p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .container p.step {
+            font-weight: bold;
+            color: #333;
+        }
+        .button {
+            background-color: #ffa500;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="first-screen" class="container">
+        <h1>asambra</h1>
+        <p>¡Estás a 2 pasos de descubrir tu sorpresa!</p>
+        <p class="step"><strong>PASO 1:</strong> Deja una review en Google (si es de 5 estrellas, ¡mejor!)</p>
+        <p class="step"><strong>PASO 2:</strong> Vuelve a esta página para conseguir tu clave</p>
+        <button class="button" onclick="redirectToReview()">Dejar Reseña</button>
+    </div>
+
+    <div id="second-screen" class="container hidden">
+        <h1>asambra</h1>
+        <p>¡Bienvenido de vuelta!</p>
+        <p>Haz clic en el botón de abajo para obtener tu clave.</p>
+        <button class="button" onclick="showThirdScreen()">Dame la Clave</button>
+    </div>
+
+    <div id="third-screen" class="container hidden">
+        <h1>asambra</h1>
+        <p>¡Gracias por tu review!</p>
+        <p>Aquí tienes tu clave: <strong>277</strong></p>
+    </div>
+
+    <script>
+        function redirectToReview() {
+            // Set a flag in local storage to indicate the review process has started
+            localStorage.setItem('reviewStarted', 'true');
+            window.location.href = "https://g.page/r/CZio6r_yNjQKEBM/review";
+        }
+
+        // Check if the review process has started and the user has returned
+        if (localStorage.getItem('reviewStarted') === 'true') {
+            setTimeout(showSecondScreen, 500); // Wait 0.5 seconds then show the second screen
+        }
+
+        // Function to show the second screen when the user returns to the app
+        function showSecondScreen() {
+            document.getElementById('first-screen').classList.add('hidden');
+            document.getElementById('second-screen').classList.remove('hidden');
+            // Clear the flag as the second screen is now shown
+            localStorage.removeItem('reviewStarted');
+        }
+
+        // Function to show the third screen and reveal the key
+        function showThirdScreen() {
+            document.getElementById('second-screen').classList.add('hidden');
+            document.getElementById('third-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
